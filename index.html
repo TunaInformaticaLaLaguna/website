@@ -12,8 +12,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      /* Deep navy satin base */
-      background: radial-gradient(ellipse at 30% 20%, #0e2248 0%, #071228 50%, #040d1c 100%);
+      background: radial-gradient(ellipse at 35% 25%, #f2f6fe 0%, #e4edf8 45%, #d6e4f4 100%);
       font-family: 'Cinzel', serif;
     }
 
@@ -25,14 +24,14 @@
       pointer-events: none;
     }
 
-    /* Satin sheen overlay — two subtle diagonal highlights */
+    /* Satin sheen overlay — two diagonal highlights */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%),
-        linear-gradient(315deg, rgba(80,120,200,0.04) 0%, transparent 60%);
+        linear-gradient(135deg, rgba(255,255,255,0.65) 0%, transparent 45%),
+        linear-gradient(315deg, rgba(190,215,255,0.3) 0%, transparent 55%);
       pointer-events: none;
       z-index: 1;
     }
@@ -52,7 +51,7 @@
       width: 100%;
       padding: 52px 32px 40px;
       text-align: center;
-      background: linear-gradient(to bottom, rgba(4, 12, 32, 0.75) 60%, transparent);
+      background: linear-gradient(to bottom, rgba(242, 248, 255, 0.7) 60%, transparent);
       pointer-events: auto;
       user-select: text;
     }
@@ -70,26 +69,25 @@
       display: inline-block;
       height: 1px;
       width: 120px;
-      background: linear-gradient(to right, transparent, #4a7acc, transparent);
+      background: linear-gradient(to right, transparent, #2a4a8a, transparent);
     }
 
     .header-ornament svg {
       width: 16px;
       height: 16px;
-      fill: #4a7acc;
+      fill: #2a4a8a;
     }
 
     h1 {
       font-family: 'Cinzel Decorative', serif;
       font-size: clamp(1.4rem, 3.5vw, 2.8rem);
       font-weight: 700;
-      color: #d8e8fc;
+      color: #0d1f45;
       letter-spacing: 0.12em;
       line-height: 1.35;
       text-shadow:
-        0 1px 2px rgba(0,0,0,0.6),
-        0 0 18px rgba(80, 140, 255, 0.5),
-        0 0 50px rgba(40, 90, 200, 0.25);
+        0 1px 3px rgba(255,255,255,0.8),
+        0 0 20px rgba(80, 130, 220, 0.15);
     }
 
     .subtitle {
@@ -98,7 +96,7 @@
       font-size: clamp(0.6rem, 1.1vw, 0.78rem);
       font-weight: 400;
       letter-spacing: 0.45em;
-      color: rgba(140, 175, 230, 0.5);
+      color: rgba(40, 75, 150, 0.55);
       text-transform: uppercase;
     }
 
@@ -115,14 +113,14 @@
       display: inline-block;
       height: 1px;
       width: 80px;
-      background: linear-gradient(to right, transparent, #4a7acc, transparent);
+      background: linear-gradient(to right, transparent, #2a4a8a, transparent);
     }
 
     .footer-ornament .dot {
       width: 3px;
       height: 3px;
       border-radius: 50%;
-      background: #4a7acc;
+      background: #2a4a8a;
     }
 
     .quienes {
@@ -139,17 +137,17 @@
       font-family: 'Cinzel Decorative', serif;
       font-size: clamp(1rem, 2vw, 1.4rem);
       font-weight: 700;
-      color: #c8dcf8;
+      color: #0d1f45;
       letter-spacing: 0.1em;
       margin-bottom: 26px;
-      text-shadow: 0 0 16px rgba(80, 140, 255, 0.4);
+      text-shadow: 0 1px 2px rgba(255,255,255,0.7);
     }
 
     .quienes p {
       font-family: Arial, sans-serif;
       font-size: clamp(0.78rem, 1.2vw, 0.92rem);
       line-height: 1.85;
-      color: rgba(195, 218, 255, 0.72);
+      color: rgba(15, 40, 90, 0.78);
       margin-bottom: 18px;
     }
   </style>
@@ -293,8 +291,8 @@
         spawnTimer = 0;
       }
 
-      // Fade background — slow fade preserves trail ghost nicely
-      ctx.fillStyle = 'rgba(4, 10, 26, 0.18)';
+      // Fade toward light background each frame to preserve trail ghost
+      ctx.fillStyle = 'rgba(228, 238, 252, 0.2)';
       ctx.fillRect(0, 0, W, H);
 
       lights.forEach((l, li) => {
@@ -339,7 +337,7 @@
             const a = t * t * l.alpha * 0.7;
             const w = 1 + t * 2.5;
             ctx.beginPath();
-            ctx.strokeStyle = `hsla(${l.hue}, 80%, 72%, ${a})`;
+            ctx.strokeStyle = `hsla(${l.hue}, 70%, 32%, ${a})`;
             ctx.lineWidth = w;
             ctx.moveTo(l.trail[i - 1].x, l.trail[i - 1].y);
             ctx.lineTo(l.trail[i].x, l.trail[i].y);
@@ -349,16 +347,16 @@
 
         // --- Draw glowing head ---
         const glow = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, l.glowR * 0.7);
-        glow.addColorStop(0,   `hsla(${l.hue}, 90%, 90%, ${l.alpha * 0.8})`);
-        glow.addColorStop(0.4, `hsla(${l.hue}, 80%, 70%, ${l.alpha * 0.3})`);
-        glow.addColorStop(1,   `hsla(${l.hue}, 70%, 50%, 0)`);
+        glow.addColorStop(0,   `hsla(${l.hue}, 80%, 25%, ${l.alpha * 0.7})`);
+        glow.addColorStop(0.4, `hsla(${l.hue}, 70%, 35%, ${l.alpha * 0.25})`);
+        glow.addColorStop(1,   `hsla(${l.hue}, 60%, 45%, 0)`);
         ctx.fillStyle = glow;
         ctx.beginPath();
         ctx.arc(l.x, l.y, l.glowR * 0.7, 0, Math.PI * 2);
         ctx.fill();
 
-        // bright core
-        ctx.fillStyle = `hsla(${l.hue}, 100%, 95%, ${l.alpha})`;
+        // dark core
+        ctx.fillStyle = `hsla(${l.hue}, 90%, 18%, ${l.alpha})`;
         ctx.beginPath();
         ctx.arc(l.x, l.y, 2.5, 0, Math.PI * 2);
         ctx.fill();
