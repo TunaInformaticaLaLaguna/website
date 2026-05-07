@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuna De Informática · ULL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      /* Deep navy satin base */
+      background: radial-gradient(ellipse at 30% 20%, #0e2248 0%, #071228 50%, #040d1c 100%);
+      font-family: 'Cinzel', serif;
+    }
+
+    canvas {
+      display: block;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 0;
+    }
+
+    /* Satin sheen overlay — two subtle diagonal highlights */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%),
+        linear-gradient(315deg, rgba(80,120,200,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #ui {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    header {
+      width: 100%;
+      padding: 52px 32px 40px;
+      text-align: center;
+      background: linear-gradient(to bottom, rgba(4, 12, 32, 0.75) 60%, transparent);
+    }
+
+    .header-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      opacity: 0.6;
+    }
+
+    .header-ornament span {
+      display: inline-block;
+      height: 1px;
+      width: 120px;
+      background: linear-gradient(to right, transparent, #4a7acc, transparent);
+    }
+
+    .header-ornament svg {
+      width: 16px;
+      height: 16px;
+      fill: #4a7acc;
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: #d8e8fc;
+      letter-spacing: 0.12em;
+      line-height: 1.35;
+      text-shadow:
+        0 1px 2px rgba(0,0,0,0.6),
+        0 0 18px rgba(80, 140, 255, 0.5),
+        0 0 50px rgba(40, 90, 200, 0.25);
+    }
+
+    .subtitle {
+      margin-top: 14px;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 1.1vw, 0.78rem);
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      color: rgba(140, 175, 230, 0.5);
+      text-transform: uppercase;
+    }
+
+    .footer-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 20px;
+      opacity: 0.4;
+    }
+
+    .footer-ornament span {
+      display: inline-block;
+      height: 1px;
+      width: 80px;
+      background: linear-gradient(to right, transparent, #4a7acc, transparent);
+    }
+
+    .footer-ornament .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #4a7acc;
+    }
+
+    .quienes {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 44px 32px 64px;
+      text-align: left;
+    }
+
+    .quienes h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 700;
+      color: #c8dcf8;
+      letter-spacing: 0.1em;
+      margin-bottom: 26px;
+      text-shadow: 0 0 16px rgba(80, 140, 255, 0.4);
+    }
+
+    .quienes p {
+      font-family: Arial, sans-serif;
+      font-size: clamp(0.78rem, 1.2vw, 0.92rem);
+      line-height: 1.85;
+      color: rgba(195, 218, 255, 0.72);
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div id="ui">
+    <header>
+      <div class="header-ornament">
+        <span></span>
+        <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9 9,9"/></svg>
+        <span></span>
+      </div>
+
+      <h1>Tuna De Informática<br>Universidad De La Laguna</h1>
+
+      <p class="subtitle">In Scientia · Et · Arte · Semper</p>
+
+      <div class="footer-ornament">
+        <span></span>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <span></span>
+      </div>
+    </header>
+
+    <section class="quienes">
+      <h2>¿Quiénes somos?</h2>
+      <p>La Tuna es una institución que está indiscutiblemente ligada a la vida universitaria. Surge como medio de sustento para los estudiantes que, a través de carisma y de dominio musical, ganan lo suficiente para pagar su carrera. Con el tiempo, estas agrupaciones se convierten en auténticas hermandades: se extienden por Latinoamérica y Europa y crean lazos entre las comunidades.</p>
+      <p>La muy honorable Tuna de Informática de la Universidad de La Laguna se funda el 14 de noviembre de 1994. Este año cumple 30 años de existencia y, en ellos, sus miembros hemos recorrido el mundo portando el escudo de nuestra Escuela y de las ciudades que visitamos en nuestras capas. De esta forma, hemos subido a los escenarios de muchos certámenes, traído premios y dejado sonrisas.</p>
+      <p>Para festejar este acontecimiento, queremos organizar un viaje a la preciosa ciudad de San Sebastián. Así, podremos agregar a nuestras capas el escudo de este espléndido lugar que visitó el mismísimo Cristóbal Colón.</p>
+    </section>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let W, H;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const rand = (a, b) => a + Math.random() * (b - a);
+
+    // Directions: right, left, down, up
+    const DIRS = [
+      { dx: 1, dy: 0 },
+      { dx: -1, dy: 0 },
+      { dx: 0, dy: 1 },
+      { dx: 0, dy: -1 },
+    ];
+
+    // --- Text zone avoidance ---
+    let textZones = [];
+
+    function updateTextZones() {
+      const PAD = 48;
+      textZones = [...document.querySelectorAll('header, .quienes')].map(el => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left - PAD, y: r.top - PAD, w: r.width + PAD * 2, h: r.height + PAD * 2 };
+      });
+    }
+
+    function inTextZone(x, y) {
+      return textZones.some(z => x >= z.x && x <= z.x + z.w && y >= z.y && y <= z.y + z.h);
+    }
+
+    function avoidZones(l) {
+      if (l.avoidCooldown > 0) return;
+      const dir = DIRS[l.dirIndex];
+      const look = Math.max(l.speed * 0.25, 60);
+      const nx = l.x + dir.dx * look;
+      const ny = l.y + dir.dy * look;
+      if (!inTextZone(nx, ny)) return;
+
+      // Try both perpendicular directions, pick one whose lookahead is clear
+      const perps = l.dirIndex < 2 ? [2, 3] : [0, 1];
+      const clear = perps.filter(pi => {
+        const pd = DIRS[pi];
+        return !inTextZone(l.x + pd.dx * look, l.y + pd.dy * look);
+      });
+
+      if (clear.length > 0) {
+        l.dirIndex = clear[Math.floor(Math.random() * clear.length)];
+      } else {
+        // Both perps blocked — reverse
+        l.dirIndex = l.dirIndex === 0 ? 1 : l.dirIndex === 1 ? 0 : l.dirIndex === 2 ? 3 : 2;
+      }
+      l.turnIn = rand(1.5, 4.5);
+      l.avoidCooldown = 0.4;
+    }
+
+    window.addEventListener('resize', updateTextZones);
+    // Wait for fonts/layout then measure
+    window.addEventListener('load', updateTextZones);
+    setTimeout(updateTextZones, 300);
+
+    function spawnLight() {
+      // Pick a random edge to enter from
+      const edge = Math.floor(Math.random() * 4); // 0=left, 1=right, 2=top, 3=bottom
+      let x, y, dirIndex;
+      if (edge === 0) { x = -10;    y = rand(0, H); dirIndex = 0; } // enter from left → right
+      if (edge === 1) { x = W + 10; y = rand(0, H); dirIndex = 1; } // enter from right → left
+      if (edge === 2) { x = rand(0, W); y = -10;    dirIndex = 2; } // enter from top → down
+      if (edge === 3) { x = rand(0, W); y = H + 10; dirIndex = 3; } // enter from bottom → up
+
+      return {
+        x, y,
+        dirIndex,
+        speed: rand(80, 180),
+        trail: [],
+        maxTrail: Math.floor(rand(180, 400)), // long trail = long memory
+        hue: rand(200, 230),
+        alpha: rand(0.55, 1.0),
+        glowR: rand(14, 26),
+        turnIn: rand(1.5, 4.0),
+        avoidCooldown: 0,
+        alive: true,
+      };
+    }
+
+    let lights = [];
+    for (let i = 0; i < 3; i++) lights.push(spawnLight());
+
+    let last = 0;
+    let spawnTimer = 0;
+
+    function loop(ts) {
+      const dt = Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+
+      spawnTimer += dt;
+      if (spawnTimer > 1.2 && lights.length < 4) {
+        lights.push(spawnLight());
+        spawnTimer = 0;
+      }
+
+      // Fade background — slow fade preserves trail ghost nicely
+      ctx.fillStyle = 'rgba(4, 10, 26, 0.18)';
+      ctx.fillRect(0, 0, W, H);
+
+      lights.forEach((l, li) => {
+        if (!l.alive) return;
+
+        const dir = DIRS[l.dirIndex];
+
+        // Record position into trail
+        l.trail.push({ x: l.x, y: l.y });
+        if (l.trail.length > l.maxTrail) l.trail.shift();
+
+        // Move
+        l.x += dir.dx * l.speed * dt;
+        l.y += dir.dy * l.speed * dt;
+
+        // Check text zone avoidance first
+        l.avoidCooldown = Math.max(0, l.avoidCooldown - dt);
+        avoidZones(l);
+
+        // Count down to possible turn
+        l.turnIn -= dt;
+        if (l.turnIn <= 0) {
+          // Turn 90° (perpendicular only)
+          const perp = (l.dirIndex < 2)
+            ? (Math.random() < 0.5 ? 2 : 3)   // was horizontal → go vertical
+            : (Math.random() < 0.5 ? 0 : 1);   // was vertical → go horizontal
+          l.dirIndex = perp;
+          l.turnIn = rand(1.5, 4.5);
+        }
+
+        // Kill if well off screen
+        if (l.x < -200 || l.x > W + 200 || l.y < -200 || l.y > H + 200) {
+          lights[li] = spawnLight();
+          return;
+        }
+
+        // --- Draw trail ---
+        const tLen = l.trail.length;
+        if (tLen > 1) {
+          for (let i = 1; i < tLen; i++) {
+            const t = i / tLen;          // 0 = oldest, 1 = newest
+            const a = t * t * l.alpha * 0.7;
+            const w = 1 + t * 2.5;
+            ctx.beginPath();
+            ctx.strokeStyle = `hsla(${l.hue}, 80%, 72%, ${a})`;
+            ctx.lineWidth = w;
+            ctx.moveTo(l.trail[i - 1].x, l.trail[i - 1].y);
+            ctx.lineTo(l.trail[i].x, l.trail[i].y);
+            ctx.stroke();
+          }
+        }
+
+        // --- Draw glowing head ---
+        const glow = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, l.glowR * 0.7);
+        glow.addColorStop(0,   `hsla(${l.hue}, 90%, 90%, ${l.alpha * 0.8})`);
+        glow.addColorStop(0.4, `hsla(${l.hue}, 80%, 70%, ${l.alpha * 0.3})`);
+        glow.addColorStop(1,   `hsla(${l.hue}, 70%, 50%, 0)`);
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(l.x, l.y, l.glowR * 0.7, 0, Math.PI * 2);
+        ctx.fill();
+
+        // bright core
+        ctx.fillStyle = `hsla(${l.hue}, 100%, 95%, ${l.alpha})`;
+        ctx.beginPath();
+        ctx.arc(l.x, l.y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      lights = lights.filter(l => l.alive);
+
+      requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
